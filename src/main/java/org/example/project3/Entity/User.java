@@ -24,7 +24,4 @@ public class User {
 
     private String password;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles; // 사용자의 역할 목록
-
 }

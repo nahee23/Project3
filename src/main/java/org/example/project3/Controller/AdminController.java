@@ -20,13 +20,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping("/goods")
-public class GoodsController {
+@RequestMapping("/admin")
+public class AdminController {
 
     @Autowired
     private GoodsRepository gRepo;
@@ -48,14 +47,14 @@ public class GoodsController {
     public String showSaleList(Model model) {
         List<GoodsDTO> unofficialGoods = gService.getUnofficialGoods();
         model.addAttribute("unofficialGoods", unofficialGoods);
-        return "index";
+        return "UnOfficialGoods";
     }
 
     @GetMapping("/official")
     public String showOfficialList(Model model) {
         List<GoodsDTO> officialGoods = gService.getOfficialGoods();
         model.addAttribute("officialGoods", officialGoods);
-        return "index2";
+        return "OfficalGoods";
     }
 
     @GetMapping("/create/official")
@@ -66,7 +65,7 @@ public class GoodsController {
     }
     @PostMapping("/create/official")
     public String CreatOfficialProduct(@Valid @ModelAttribute GoodsDTO goodsDTO,
-                               BindingResult result) {
+                                       BindingResult result) {
 
         if (goodsDTO.getImageFile() == null || goodsDTO.getImageFile().isEmpty()) {
             result.addError(new FieldError("goodsDTO", "imageFile", "Image file is required"));
@@ -248,7 +247,7 @@ public class GoodsController {
 
         gRepo.save(goods); //수정이 완료된 제품객체로 DB 업데이트함
 
-        return "redirect:/goods";
+        return "redirect:/admin";
     }
 
     @GetMapping("/delete")
@@ -272,15 +271,13 @@ public class GoodsController {
             System.out.println("Error: " + e.getMessage());
         }
 
-        return "redirect:/goods";
+        return "redirect:/admin";
     }
 
     @GetMapping("/view")
-    public String showGoodsView(Model model, @RequestParam int id, Principal principal) {
+    public String showGoodsView(Model model, @RequestParam int id) {
         Goods goods = gRepo.findById(id).get();
-        String loggedInUserEmail = principal != null ? principal.getName() : null;
         model.addAttribute("goods", goods);
-        model.addAttribute("loggedInUserEmail", loggedInUserEmail);
         return "view";
     }
 }

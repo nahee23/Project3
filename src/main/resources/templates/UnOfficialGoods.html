@@ -12,8 +12,8 @@
 <div th:replace="navbar"></div>
 
 <div class="container">
-    <h1 class="text-center my-4">Products</h1>
-    <a class="btn btn-primary" href="/admin/create/official">Create Product</a>
+    <h1 class="text-center my-4">Sale</h1>
+    <a class="btn btn-primary" href="/admin/create/unofficial">Create Product</a>
 
     <table class="table">
         <thead>
@@ -28,7 +28,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="goods: ${officialGoods}">
+        <tr th:each="goods: ${unofficialGoods}">
             <td th:text="${goods.id}"></td>
             <td>
                 <img th:src="@{'/images/'+${goods.imageFileName}}" width="100">

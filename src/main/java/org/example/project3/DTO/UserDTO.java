@@ -2,6 +2,8 @@ package org.example.project3.DTO;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class UserDTO {
@@ -16,6 +18,4 @@ public class UserDTO {
     private String password;
 
     private String confirmPassword; //DTO에만
-
-    private boolean isAdmin;
 }

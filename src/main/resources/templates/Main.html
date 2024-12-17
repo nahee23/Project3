@@ -7,26 +7,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-<nav class="navbar navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="${'/goods'}">Goods</a>
+<!-- 공통 네비게이션 바를 포함 -->
+<div th:replace="navbar"></div>
 
-    <ul class="nav justify-content-end">
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" th:href="${'/goods'}">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" th:href="${'/goods/official'}">Offical</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" th:href="${'/goods/sale'}">Sale</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/logout}" >로그아웃</a>
-        </li>
-    </ul>
-    </div>
-</nav>
 <div class="container">
     <h1 class="text-center my-4">Main</h1>
 

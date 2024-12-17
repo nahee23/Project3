@@ -25,7 +25,7 @@
           <pre th:text="${goods.description}"></pre>
           <br>
 
-          작성자 : <span th:text="${goods.user}"></span>
+          작성자 : <span th:text="${goods.user.name}"></span>
           <br><br>
           가격 : <span th:text="@{${goods.price}+ '원'}"></span>
           <br><br>
@@ -36,6 +36,11 @@
           <div>
             <p>총금액: <span id="my_sum" th:text="${goods.price}">0</span>원</p>
             <input type="hidden" id="sell_price" th:value="${goods.price}">
+          </div>
+          <br>
+          <div th:if="${loggedInUserEmail == goods.user.getEmail()}" class="d-grid gap-2 d-md-flex justify-content-md-end me-5">
+            <a th:href="@{/goods/edit(id=${goods.id})}" class="btn btn-outline-dark">수정</a>
+            <a th:href="@{/goods/delete(id=${goods.id})}" class="btn btn-outline-dark">삭제</a>
           </div>
         </article>
 

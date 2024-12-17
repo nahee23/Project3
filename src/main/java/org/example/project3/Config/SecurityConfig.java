@@ -1,6 +1,7 @@
 package org.example.project3.Config;
 
 import lombok.RequiredArgsConstructor;
+import org.example.project3.Service.CustomAuthenticationSuccessHandler;
 import org.example.project3.Service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,8 @@ public class SecurityConfig {
 
     private final CustomUserDetailsService customUserDetailsService;
 
+    private final CustomAuthenticationSuccessHandler successHandler;
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -33,10 +36,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authz) ->
                         authz
-                                // 관리자 전용 페이지 설정
-                                .requestMatchers("/admin/**").hasRole("ADMIN")
-                                // 회원 전용 페이지 설정
-                                .requestMatchers("/user/**").hasRole("USER")
+                                // 특정 페이지에 대한 접근 제한 설정
+                                .requestMatchers("/admin").hasRole("ADMIN") // 특정 권한 필요
                                 // 공용 페이지 설정
                                 .requestMatchers("/","/login","/register", "/goods").permitAll()
                                 .anyRequest().authenticated()
@@ -44,7 +45,8 @@ public class SecurityConfig {
                         formLogin
                                 .loginPage("/login")
                                 .failureUrl("/login")
-                                .defaultSuccessUrl("/goods")
+                                .successHandler(successHandler)
+                                //.defaultSuccessUrl("/goods")
                                 .usernameParameter("email")
                                 .passwordParameter("password")
                 ).logout((logout) ->
@@ -76,5 +78,6 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
 
 }
