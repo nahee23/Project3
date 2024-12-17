@@ -4,26 +4,42 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>회원가입 페이지</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+    <link rel="stylesheet" th:href="@{/css/base.css}" />
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
 </head>
 <body>
-<h1>회원 가입</h1>
-<hr />
-<form id="registerForm" th:object="${user}" th:action="@{/register}" method="post">
-    <input type="text" placeholder="이름 입력" th:field="*{name}" />
-    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-    <br /><br />
-    <input type="text" placeholder="이메일 입력" th:field="*{email}" />
-    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-    <br /><br />
-    <input type="password" placeholder="비밀번호 입력" th:field="*{password}" />
-    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-    <br /><br />
-    <input type="password" placeholder="비밀번호 확인" th:field="*{confirmPassword}" />
-    <br /><br />
-    <button type="submit">Submit</button>
-</form>
+<div class="box-layout justify-content-center">
+    <div class="card box-layout__box text-center">
+        <div class="card-header border-bottom-0 pb-0 bg-white">
+            <h1 class="box-layout__title">회원가입</h1>
+            <p class="box-layout__title">원하는 굿즈를 거래해보세요!</p>
+        </div>
+
+        <div class="card-body pt-0">
+            <form th:object="${user}" th:action="@{/register}" method="post" id="registerForm">
+                <input type="text" placeholder="이름 입력" th:field="*{name}" class="form-control mb-3" autofocus="autofocus" />
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+                <input type="text" placeholder="이메일 입력" th:field="*{email}" class="form-control mb-3" />
+                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+
+                <input type="password" placeholder="패스워드 입력" th:field="*{password}" class="form-control mb-3" />
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+
+                <input type="password" placeholder="패스워드 확인" th:field="*{confirmPassword}" class="form-control mb-3" />
+
+                <button type="submit" class="btn button_default form-control">가입하기</button>
+            </form>
+        </div>
+        <div class="card-footer bg-white border-top-0">
+            <span class="float-right"> 이미 가입했나요? - <a th:href="@{/login}" class="base-color font-weight-bold">로그인</a> </span>
+        </div>
+    </div>
+</div>
 <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 <script th:src="@{/js/jquery-validation.js}"></script>
+<script th:src="@{/js/bootstrap.js}"></script>
 <script th:src="@{/js/register.js}"></script>
 </body>
 </html>

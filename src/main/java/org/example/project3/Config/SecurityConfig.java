@@ -12,7 +12,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.WebAuthnConfigurer;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -34,7 +38,7 @@ public class SecurityConfig {
                                 // 회원 전용 페이지 설정
                                 .requestMatchers("/user/**").hasRole("USER")
                                 // 공용 페이지 설정
-                                .requestMatchers("/","/login","/register", "/create/unofficial").permitAll()
+                                .requestMatchers("/","/login","/register", "/goods").permitAll()
                                 .anyRequest().authenticated()
                 ).formLogin((formLogin) ->
                         formLogin

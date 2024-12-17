@@ -9,7 +9,7 @@
 <body>
 <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Goods</a>
+        <a class="navbar-brand" th:href="${'/goods'}">Goods</a>
 
         <ul class="nav justify-content-end">
             <li class="nav-item">
@@ -43,15 +43,15 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="good: ${goods}">
-            <td th:text="${good.id}"></td>
+        <tr th:each="goods: ${unofficialGoods}">
+            <td th:text="${goods.id}"></td>
             <td>
-                <img th:src="@{'/images/'+${good.imageFileName}}" width="100">
+                <img th:src="@{'/images/'+${goods.imageFileName}}" width="100">
             </td>
-            <td><a th:text="${good.title}" th:href="@{/goods/view(id=${good.id})}"> </a></td>
-            <td th:text="${good.category}"></td>
-            <td th:text="@{${good.price} + '원'}"></td>
-            <td th:text="${good.createAt.toString().substring(0,10)}"></td>
+            <td><a th:text="${goods.title}" th:href="@{/goods/view(id=${goods.id})}"> </a></td>
+            <td th:text="${goods.category}"></td>
+            <td th:text="@{${goods.price} + '원'}"></td>
+            <td th:text="${goods.createAt.toString().substring(0,10)}"></td>
         </tr>
         </tbody>
     </table>

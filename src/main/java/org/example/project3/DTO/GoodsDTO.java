@@ -9,6 +9,8 @@ import lombok.Setter;
 import org.example.project3.Entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
+
 
 @Getter
 @Setter
@@ -29,5 +31,9 @@ public class GoodsDTO {
     private MultipartFile imageFile;
 
     private User user;
+
+    private String imageFileName;
+
+    private Date createAt;
 
 }

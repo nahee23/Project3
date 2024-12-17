@@ -16,4 +16,6 @@ public class UserDTO {
     private String password;
 
     private String confirmPassword; //DTO에만
+
+    private boolean isAdmin;
 }

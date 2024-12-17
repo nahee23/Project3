@@ -5,6 +5,7 @@ import org.example.project3.DTO.GoodsDTO;
 import org.example.project3.Entity.Category;
 import org.example.project3.Entity.Goods;
 import org.example.project3.Repository.GoodsRepository;
+import org.example.project3.Service.GoodsService;
 import org.example.project3.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,9 @@ public class GoodsController {
     @Autowired
     private UserService uService;
 
+    @Autowired
+    private GoodsService gService;
+
     @GetMapping({"","/"})
     public String showGoodsList(Model model) {
         List<Goods> goods = gRepo.findAll();
@@ -41,15 +45,15 @@ public class GoodsController {
 
     @GetMapping("/sale")
     public String showSaleList(Model model) {
-        List<Goods> goods = gRepo.findAll();
-        model.addAttribute("goods", goods);
+        List<GoodsDTO> unofficialGoods = gService.getUnofficialGoods();
+        model.addAttribute("unofficialGoods", unofficialGoods);
         return "index";
     }
 
     @GetMapping("/official")
     public String showOfficialList(Model model) {
-        List<Goods> goods = gRepo.findAll();
-        model.addAttribute("goods", goods);
+        List<GoodsDTO> officialGoods = gService.getOfficialGoods();
+        model.addAttribute("officialGoods", officialGoods);
         return "index2";
     }
 
