@@ -25,6 +25,10 @@
         <a class="nav-link" th:href="${#authentication.principal.username == 'knh3136@naver.com' ? '/admin/sale' : '/goods/sale'}">Sale</a>
       </li>
       <li class="nav-item">
+        <!-- Sale 링크도 로그인한 사용자가 knh3136@naver.com이면 /admin/sale로 리다이렉트 -->
+        <a class="nav-link" th:href="@{/cart}">Cart</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" th:href="@{/logout}" >로그아웃</a>
       </li>
     </ul>

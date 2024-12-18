@@ -6,7 +6,9 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -37,5 +39,8 @@ public class Goods {
     @JoinColumn(name = "userId")
     private User user;
     private String imageFileName;
+
+    @OneToMany(mappedBy = "goods", cascade = CascadeType.ALL)
+    private List<Cart> carts = new ArrayList<>();
 }
 

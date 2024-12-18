@@ -3,6 +3,7 @@ package org.example.project3.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,4 +25,13 @@ public class User {
 
     private String password;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Cart> carts = new ArrayList<>();
+
+    public User(Long userId) {
+    }
+
+    public User() {
+
+    }
 }

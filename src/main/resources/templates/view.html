@@ -53,7 +53,12 @@
 <div class="d-grid gap-2 d-md-flex justify-content-md-end me-5">
     <button class="btn btn-danger">구매하기</button>
 
-  <button class="btn btn-primary">장바구니</button>
+  <form th:action="@{/cart/add}" method="post">
+    <input type="hidden" name="goodsId" th:value="${goods.id}">
+    <input type="hidden" name="quantity" value="1">
+    <input type="hidden" name="price" th:value="${goods.price}">
+    <button type="submit" class="btn btn-primary">장바구니</button>
+  </form>
 
     <a class="btn btn-outline-primary" href="/goods" role="button">뒤로가기</a>
 </div>
@@ -80,6 +85,8 @@
     amountsInput.value = currentAmount;
     document.getElementById("my_sum").innerText = total.toLocaleString('ko-KR');
   }
+
+
 </script>
 </body>
 </html>
