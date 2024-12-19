@@ -2,6 +2,7 @@ package org.example.project3.Service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.project3.DTO.GoodsDTO;
+import org.example.project3.DTO.GoodsFilterDTO;
 import org.example.project3.Entity.Category;
 import org.example.project3.Entity.Goods;
 import org.example.project3.Repository.GoodsRepository;
@@ -51,5 +52,11 @@ public class GoodsService {
     public Goods getGoodsById(Long id) {
         return gRepo.findById(Math.toIntExact(id))
                 .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다. id: " + id));
+    }
+
+    public List<GoodsDTO> getFilterGoods(GoodsFilterDTO filter) {
+        String keyword = filter.getKeyword();
+        List<Goods> goodsList = gRepo.findByTitleContaining(keyword);
+        return goodsList.stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 }

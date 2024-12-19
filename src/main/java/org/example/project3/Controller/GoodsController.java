@@ -2,6 +2,7 @@ package org.example.project3.Controller;
 
 import jakarta.validation.Valid;
 import org.example.project3.DTO.GoodsDTO;
+import org.example.project3.DTO.GoodsFilterDTO;
 import org.example.project3.Entity.Category;
 import org.example.project3.Entity.Goods;
 import org.example.project3.Repository.GoodsRepository;
@@ -48,6 +49,7 @@ public class GoodsController {
     public String showSaleList(Model model) {
         List<GoodsDTO> unofficialGoods = gService.getUnofficialGoods();
         model.addAttribute("unofficialGoods", unofficialGoods);
+        model.addAttribute("filter", new GoodsFilterDTO());
         return "index";
     }
 
@@ -55,6 +57,7 @@ public class GoodsController {
     public String showOfficialList(Model model) {
         List<GoodsDTO> officialGoods = gService.getOfficialGoods();
         model.addAttribute("officialGoods", officialGoods);
+        model.addAttribute("filter", new GoodsFilterDTO());
         return "index2";
     }
 

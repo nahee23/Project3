@@ -9,4 +9,6 @@ import java.util.List;
 public interface GoodsRepository extends JpaRepository<Goods,Integer> {
     Integer id(int id);
     List<Goods> findByCategory(Category category);
+
+    List<Goods> findByTitleContaining(String keyword);
 }
