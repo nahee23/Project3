@@ -47,4 +47,9 @@ public class GoodsService {
         List<Goods> unofficialGoods = gRepo.findByCategory(Category.valueOf("UNOFFICIAL"));
         return unofficialGoods.stream().map(this::mapToDTO).collect(Collectors.toList());
     }
+
+    public Goods getGoodsById(Long id) {
+        return gRepo.findById(Math.toIntExact(id))
+                .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다. id: " + id));
+    }
 }

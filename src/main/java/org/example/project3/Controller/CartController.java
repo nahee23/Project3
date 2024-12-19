@@ -3,7 +3,9 @@ package org.example.project3.Controller;
 import jakarta.validation.Valid;
 import org.example.project3.DTO.CartRequestDTO;
 import org.example.project3.DTO.CartResponseDTO;
+import org.example.project3.Entity.Cart;
 import org.example.project3.Entity.Goods;
+import org.example.project3.Repository.CartRepository;
 import org.example.project3.Repository.GoodsRepository;
 import org.example.project3.Service.CartService;
 import org.example.project3.Service.UserService;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/cart")
@@ -23,11 +26,13 @@ public class CartController {
     private final CartService cartService;
     private final UserService userService;
     private final GoodsRepository gRepo;
+    private final CartRepository cartRepo;
 
-    public CartController(CartService cartService, UserService userService, GoodsRepository gRepo) {
+    public CartController(CartService cartService, UserService userService, GoodsRepository gRepo, CartRepository cartRepo) {
         this.cartService = cartService;
         this.userService = userService;
         this.gRepo = gRepo;
+        this.cartRepo = cartRepo;
     }
 
 //    @PostMapping("/add")
@@ -73,7 +78,7 @@ public class CartController {
         model.addAttribute("cartTotalPrice", cartService.getCartTotalPrice(userId)); // 총 금액
 
         // 4. 장바구니 페이지로 이동
-        return "cart"; // templates/cart.html 렌더링
+        return "redirect:/cart"; // templates/cart.html 렌더링
     }
 
     // 장바구니 페이지 렌더링
@@ -99,33 +104,47 @@ public class CartController {
 
 
 
-//
-//    // 장바구니 항목 추가/수정
-//    @PostMapping
-//    public ResponseEntity<CartResponseDTO> addOrUpdateCartItem(
-//            @RequestHeader("userId") Long userId,
-//            @RequestBody CartRequestDTO requestDTO) {
-//        CartResponseDTO responseDTO = cartService.addOrUpdateCart(userId, requestDTO);
-//        return ResponseEntity.ok(responseDTO);
-//    }
-//
-//    // 장바구니 조회
-//    @GetMapping
-//    public ResponseEntity<List<CartResponseDTO>> getCartItems(Principal principal) {
-//        String email = principal.getName(); // 현재 사용자 ID
-//        Long userId = userService.getUserIdByEmail(email);
-//        List<CartResponseDTO> cartItems = cartService.getCartItems(userId);
-//        return ResponseEntity.ok(cartItems);
-//
-//    }
-//
-//    // 장바구니 항목 삭제
-//    @DeleteMapping("/{cartId}")
-//    public ResponseEntity<Void> removeCartItem(
-//            @RequestHeader("userId") Long userId,
-//            @PathVariable Long cartId) {
-//        cartService.removeCartItem(userId, cartId);
-//        return ResponseEntity.noContent().build();
-//    }
+
+    // 장바구니 항목 추가/수정
+    @PostMapping("/update")
+    public String updateCartItem(
+            Principal principal,
+            @RequestParam int quantity,
+            @RequestParam int id) {
+
+        if (principal == null) {
+            throw new IllegalStateException("로그인이 필요합니다.");
+        }
+        String email = principal.getName();
+        Long userId = userService.getUserIdByEmail(email);
+        cartService.updateCartItem(userId, (long) id, quantity);
+        return "redirect:/cart";
+    }
+
+    // 장바구니 항목 삭제
+    @GetMapping("/delete")
+    public String removeCartItem(
+            Principal principal,
+            @RequestParam Long id) {
+        if (principal == null) {
+            throw new IllegalStateException("로그인이 필요합니다.");
+        }
+        String email = principal.getName();
+        Long userId = userService.getUserIdByEmail(email);
+
+        System.out.println("User ID: " + userId);
+        System.out.println("Cart ID: " + id);
+
+        Optional<Cart> cart = cartRepo.findByCartIdAndUserId(id, userId);
+        System.out.println("Cart found: " + cart.isPresent());
+        if (cart.isPresent()) {
+            // 존재하면 삭제 처리
+            cartService.removeCartItem(id, userId);
+        } else {
+            // 없으면 예외 처리 (선택사항)
+            throw new IllegalArgumentException("장바구니 항목을 찾을 수 없습니다.");
+        }
+        return "redirect:/cart"; // 삭제 후 장바구니 페이지로 리디렉션
+    }
 
 }

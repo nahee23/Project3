@@ -55,9 +55,9 @@
 
   <form th:action="@{/cart/add}" method="post">
     <input type="hidden" name="goodsId" th:value="${goods.id}">
-    <input type="hidden" name="quantity" value="1">
+    <input type="hidden" name="quantity" id="quantity" value="1">
     <input type="hidden" name="price" th:value="${goods.price}">
-    <button type="submit" class="btn btn-primary">장바구니</button>
+    <button type="submit" class="btn btn-primary" onclick="updateCart()">장바구니</button>
   </form>
 
     <a class="btn btn-outline-primary" href="/goods" role="button">뒤로가기</a>
@@ -67,6 +67,7 @@
   function updateQuantity(change) {
     // 현재 수량과 가격 가져오기
     const amountsInput = document.getElementById("amounts");
+    const hiddenQuantityInput = document.getElementById("quantity");
     const sellPrice = document.getElementById("sell_price").value;
 
     // 수량 업데이트
@@ -83,7 +84,18 @@
 
     // 값 업데이트
     amountsInput.value = currentAmount;
+    hiddenQuantityInput.value = currentAmount; // 숨겨진 필드 값 업데이트
     document.getElementById("my_sum").innerText = total.toLocaleString('ko-KR');
+  }
+
+  function updateCart() {
+    // 폼 제출 전에 quantity 값을 동적으로 변경합니다.
+    const hiddenQuantityInput = document.getElementById("quantity");
+    const quantityValue = hiddenQuantityInput.value; // 현재 quantity 값을 가져옵니다.
+    console.log("Updating cart with quantity:", quantityValue); // 확인용 로그
+
+    // 폼을 제출합니다.
+    document.getElementById("cartForm").submit();
   }
 
 

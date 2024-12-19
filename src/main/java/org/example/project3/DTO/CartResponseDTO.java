@@ -26,9 +26,10 @@ public class CartResponseDTO {
         this.imageFileName = imageFileName; // 이미지 파일 이름 설정
     }
 
-    public CartResponseDTO(Long cartId, Long id, String title, int quantity, int totalPrice) {
+    public CartResponseDTO(Long cartId, Long id, String title, int quantity, int totalPrice, int price, String imageFileName) {
     }
 
-    public CartResponseDTO(Long cartId, Long id, String title, int quantity, int totalPrice, int price, String imageFileName) {
+    public CartResponseDTO() {
+
     }
 }
